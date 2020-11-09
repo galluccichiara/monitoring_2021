@@ -40,3 +40,38 @@ plot(cadmium,lead)
 #pairs(meuse) if i want to observer them in a scattlered vision 
 
 pairs(meuse)
+
+#recall the package sp, recall the dataset meuse
+library(sp)
+data(meuse)
+
+#see all variables in graphs or in table 
+pairs(meuse) 
+head(meuse)
+
+#cadmium copper lead zinc
+#pairs soil valiables 
+#how to explain to R that we want to use from colomn number 3 to column 6 (check looking table shown thought head(meuse)
+#using [] to select columns and , : 
+#in this way we are making use of columns and not rows. 
+#remark: column counting start from 1 instead from 0
+pairs(meuse[,3:6])
+
+#when it doesn't work refresh R with this code dev.off()
+
+#i can replace number columns using names of columns 
+pairs(~ cadmium + copper + lead + zinc, data=meuse) 
+# tildle is going to be done by Alt + 126
+
+#let's pretiffy (abbellire) the graph
+#colours
+pairs(~ cadmium + copper + lead + zinc, data=meuse, col="pink") 
+
+#change symbols
+pairs(~ cadmium + copper + lead + zinc, data=meuse, col="red", pch=17) 
+
+#increase size 
+pairs(~ cadmium + copper + lead + zinc, data=meuse, col="red", pch=17, cex=3)
+
+#let's analyse if increasing a variable, even other variable is going to increase
+#let's analyse their relationship 
