@@ -34,3 +34,46 @@ bubble(meuse, "copper")
 
 #change the data
 bubble(meuse, "lead", col="red")
+
+#TO BE CONTINUED..
+#LECTURE 2 
+#install a new packages
+install.packages("ggplot2")
+library(ggplot2)
+
+#let's put a new ecological dataframe
+#e.g relationship between biofuels and amount of oxydatve enzimes 
+#let's make an array of values
+biofuels <- c(120, 200,300,570,750) 
+oxydative <- c(1200,1300, 21000,34000,50000)
+
+#let's make our dataframe (table: columns + rows) 
+d <- data.frame(biofuels,oxydative)
+
+#let's make plot
+#first of all closed to parenthesis, name of data-> in this case "d"
+ggplot(d, aes(x= biofuels, y=oxydative))
+
+#now we can choose how to set our plot (points, lines)
+#if we choose to build points inside the plot
+ggplot(d, aes(x= biofuels, y=oxydative))+ geom_point()
+
+#let's to prettify
+ggplot(d, aes(x= biofuels, y=oxydative))+ geom_point(col="red")
+#since we're using gg package, let's replace size instead of cex in order to increse size of characters. 
+ggplot(d, aes(x= biofuels, y=oxydative))+ geom_point(size= 5, col="red")
+
+#let's use line, texting geom_line
+ggplot(d, aes(x= biofuels, y=oxydative))+ geom_line(size= 5, col="red")
+
+# let's mix lines+points
+ggplot(d, aes(x= biofuels, y=oxydative))+ geom_point (size= 5, col="red") + geom_line ()
+
+# let's make polygon, in order to look how points are scattered from line
+ggplot(d, aes(x= biofuels, y=oxydative)) + geom_polygon ()
+
+#### IMPORT DATA FROM AN EXTERNAL SOURCE
+#setwd("path/lab")
+setwd( "C:/lab/")
+setwd("/Users/yourname/.../lab")
+setwd("/Users/Chiara/Desktop/LAB")
