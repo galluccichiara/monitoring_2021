@@ -75,5 +75,6 @@ ggplot(d, aes(x= biofuels, y=oxydative)) + geom_polygon ()
 #### IMPORT DATA FROM AN EXTERNAL SOURCE
 #setwd("path/lab")
 setwd( "C:/lab/")
-setwd("/Users/yourname/.../lab")
-setwd("/Users/Chiara/Desktop/LAB")
+# Mac 
+# Mac setwd("/Users/yourname/.../lab")
+
