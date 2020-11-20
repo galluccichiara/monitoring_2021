@@ -78,3 +78,26 @@ setwd( "C:/lab/")
 # Mac 
 # Mac setwd("/Users/yourname/.../lab")
 
+covid <- read.table("covid_agg.csv", header=TRUE)
+#if we use "header=TRUE" it means the data has as first row the name of variables.
+#if we use "header=FALSE" it means the name of the columns are inside the table
+
+#head(covid) shows us the first lines of data
+head(covid)
+#covid shows us all the data
+covid
+#summary summarize the data in a statistical point of view 
+summary(covid)
+#names shows us names of variables which can be used to build our plot
+names(covid)
+
+#first of all we should recall library to remind R ggplot2
+library(ggplot2)
+#"eas"are plot's variables: x=longitude (because it moves from south to north) y=latitude (because it moves from the west to est)
+ggplot(covid, aes(x = lon, y = lat)) + geom_point()
+# in this case each point represents a country 
+
+#changing the size of the data
+#we can change the size according to the number of cases, the biggest symbol is releated to the highest numbers of cases country 
+ggplot(covid, aes(x = lon, y = lat, size=cases)) + geom_point()
+
