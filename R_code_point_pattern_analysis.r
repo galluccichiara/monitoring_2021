@@ -8,7 +8,7 @@ setwd("C:/lab/")
 covid <- read.table("covid_agg.csv", header=TRUE)
 covid
 
-#point patterns analysis
+#point patterns analysis (for density and value map)
 
 #First of all:
 attach(covid)
@@ -37,3 +37,42 @@ plot(density_map,col=cl)
 
 #install new package
 install.packages("rgdal")
+library(rgdal)
+
+#let's download file
+#after downloaded it, let's explain to R
+coastlines<-readOGR("ne_10m_coastline.shp")
+
+#let's make once again plot
+cl <- colorRampPalette(c('lightpink','mediumorchid3','blue'))(100)
+plot(density_map, col = cl)
+points(covid_planar)
+plot(coastlines, add = TRUE)
+
+#now let's move from open circle point to full circle point (pch=19)
+# or let's make size smaller (cex=0-5)
+
+cl <- colorRampPalette(c('lightpink','mediumorchid3','blue'))(100)
+plot(density_map, col = cl)
+points(covid_planar, pch = 19, cex = 0.5)
+plot(coastlines, add = TRUE)
+
+#let's save figure in lab
+png("figure1.png")
+cl <- colorRampPalette(c('pink','green','orange','red','magenta'))(100) #
+plot(density_map, col = cl)
+points(covid_planar, pch = 19, cex = 0.5)
+plot(coastlines, add = TRUE)
+dev.off()
+
+#now let's deal with predict number of cases which have not measure instead of density of cases
+#let's interpolate case data
+marks(covid_planar) <-cases
+cases_map <- Smooth(covid_planar)
+
+#let's make our plot after interpolated our data
+plot(cases_map, col = cl)
+points(covid_planar)
+plot(coastlines, add = T)
+
+
