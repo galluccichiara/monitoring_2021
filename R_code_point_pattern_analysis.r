@@ -75,4 +75,31 @@ plot(cases_map, col = cl)
 points(covid_planar)
 plot(coastlines, add = T)
 
+######## another way by norma
+setwd("C:/lab/")
+library(spatstat)
+covid <- read.table("covid_agg.csv", header=TRUE)
+head(covid)
 
+attach(covid)
+covid_planar <- ppp(lon, lat, c(-180,180), c(-90,90))
+
+marks(covid_planar) <- cases
+cases_map <- Smooth(covid_planar)
+
+cl <- colorRampPalette(c('lightpink2','lightsalmon','tomato1','red3','maroon'))(100)
+plot(cases_map,col=cl)
+points(covid_planar)
+
+
+install.packages("sf")
+library(sf)
+
+Spoints <- st_as_sf(covid, coords = c("lon", "lat"))
+cl <- colorRampPalette(c('lightpink2','lightsalmon','tomato1','red3','maroon'))(100)
+plot(cases_map, col = cl)
+plot(Spoints, cex=Spoints$cases/10000, col = 'purple3', lwd = 3, add=T)
+
+library(rgdal)
+coastlines <- readOGR("ne_10m_coastline.shp")
+plot(coastlines, add=T)
