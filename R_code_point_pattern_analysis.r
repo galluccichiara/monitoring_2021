@@ -119,7 +119,56 @@ density_map <- density(leo_ppp)
 plot(density_map)
 points(leo_ppp)
 
+###### NEW LECTURE
+setwd("C:/lab/")
 
+load("point_pattern_analysis.RData")
+head(leo)
+# ls() -> recall name I've chosen to write properly 
 
+#explaining to R the variables what we want to use, in this case chlh (name in table, and h stands for water)
+library(spatstat)
+attach(leo)
+marks(leo_ppp) <- chlh
+chlh_map <- Smooth(leo_ppp)
+plot(chlh_map)
+points(leo_ppp)
 
+cl <- colorRampPalette(c('yellow','orange','red','green'))(100) 
+plot(chlh_map, col=cl)
+points(leo_ppp)
+
+#let's do the same with other variable chls (s stands for sediment)
+marks(leo_ppp) <- chls
+chls_map <- Smooth(leo_ppp)
+plot(chls_map)
+points(leo_ppp)
+cl <- colorRampPalette(c('yellow','orange','red','green'))(100) 
+plot(chls_map, col=cl)
+points(leo_ppp)
+
+# multipanel 
+# comparaing plots, first number in paranthesis stands for numbers of rows and second number stands for number of columns
+par(mfrow=c(1,3))
+ 
+# first graph: density map
+plot(density_map, col=cl)
+points(leo_ppp)
+
+#second graph:
+plot(chlh_map, col=cl)
+points(leo_ppp)
+
+# third graph
+plot(chls_map, col=cl)
+points(leo_ppp)
+
+#let's do the reverse, rather than having 1 row and 3 columns, let's have the reverse
+par(mfrow=c(3,1))
+plot(density_map, col=cl)
+points(leo_ppp)
+plot(chlh_map, col=cl)
+points(leo_ppp)
+plot(chls_map, col=cl)
+points(leo_ppp)
 
