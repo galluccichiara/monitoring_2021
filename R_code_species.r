@@ -76,24 +76,3 @@ plot(s1, col=cl)
 
 #Model combines temperature, vegetation, precipitation and occurence in order to check the spatial distribution, there is high probability where yellow and red space, blue colours low probability to find species. 
 ##i valori del modello spiegano la probabilità di trovare una specie e infatti questo è in linea con le previsioni perchè dove le specie avevano occurance 1 hanno alta probabilità nel modello, le specie che avevano occurance 0 bassa. PROBABILITY OF DISTRIBUTION 
-
-# add to the stack
-s1 <- stack(preds,p1)
-plot(s1, col=cl)
-#point data + predictors -> model
-#first, let's explain to R which are the data with #sdmData function
-datasdm <- sdmData(train=species, predictors=preds) #train is training set, the in-situ data
-datasdm #show info
-#let's build the model
-m1 <- sdm(Occurrence ~ elevation + precipitation + temperature + vegetation, data=datasdm, methods = "glm") #tilde ~ says that "occurence is = to..." ###glm generalized linear model
-# make the raster output layer, the final prediction
-p1 <- predict(m1, newdata=preds) #predict function
-#plot the output
-plot(p1, col=cl)
-points(species[species$Occurrence == 1,], pch=17)
-# add to the stack, show the 4 layers and the speciesdistributionmodel all together
-s1 <- stack(preds,p1) #preds is the name of the stack of the 4 layers, #p1 is the sdm
-plot(s1, col=cl)
-
-#Model combines temperature, vegetation, precipitation and occurence in order to check the spatial distribution, there is high probability where yellow and red space, blue colours low probability to find species. 
-##i valori del modello spiegano la probabilità di trovare una specie e infatti questo è in linea con le previsioni perchè dove le specie avevano occurance 1 hanno alta probabilità nel modello, le specie che avevano occurance 0 bassa. PROBABILITY OF DISTRIBUTION 
