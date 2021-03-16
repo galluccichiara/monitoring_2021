@@ -65,5 +65,5 @@ cldif <- colorRampPalette (c('blue','black','yellow')) (100) #where the new map 
 plot(difNO2, col=cldif)
 
 
-#cosa notiamo + aggiusta colori 
+#cosa notiamo + aggiusta colori http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf
 #???? funzione salvataggio
