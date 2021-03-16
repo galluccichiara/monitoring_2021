@@ -84,7 +84,7 @@ dev.off()
 plotRGB(EN, red=EN13, green=EN07, blue=EN01, stretch="lin")
 
 #what we can see is that while the media is more or less the same, the maximum value for each changes. 
-boxplot(EN,horizontal=T,axes=T,outline=F)
+boxplot(ENstack,horizontal=T,axes=T,outline=F)
 #where's red, it means that the level of NO2 is higher in march than in jan
 dev.off()
 boxplot(EN,horizontal=T,axes=T,outline=F)
