@@ -90,4 +90,4 @@ dev.off()
 boxplot(EN,horizontal=T,axes=T,outline=F)
 #info in the graph: median values remain, more or less, the same / the maximum values decrease from jan to mar
 #let's change colour and give names (label) to axys for this reason "xLAB", it means labelling x axys.  
-boxplot(EN,horizontal=T,axes=T,outline=F, col="red",xlab="NO2 - 8bit", ylab="Period") #lab beacause are labels 
+boxplot(EN,horizontal=T,axes=T,outline=F, col="red",xlab="NO2 - 8bit", ylab="Period")) #lab because they are labeled
