@@ -81,11 +81,11 @@ plot(EULAI, col= cl, main="EU.LAI 13/10/2019-30/06/2020")
 
 par(mfrow=c(1,3))
 cl <- colorRampPalette (c("burlywood4","yellow","green4")) (100)
-plot(EUFAPAR, col=cl,main="EU.FAPAR 13/12/2019-31/08/2020") 
+plot(EUFAPAR, col=cl,main="EU.FAPAR 13/10/2019-30/06/2020") 
 cl <- colorRampPalette (c('green','chocolate3','darkblue')) (100) 
 plot(EUALBEDO, col=cl,main="EU.ALBEDO 15/04-15/05/20")
 cl <- colorRampPalette (c("burlywood4","yellow","green4")) (100)
-plot(EULAI,col=cl, main="EU.LAI 13/12/2019-31/08/2020")
+plot(EULAI,col=cl, main="EU.LAI 13/10/2019-30/06/2020")
 
 #???????????????????
 plotRGB(EN, red=EN13, green=EN07, blue=EN01, stretch="lin")
