@@ -68,7 +68,7 @@ defor2 <- brick("defor2_.jpg")
 plotRGB(defor2, r=1, g=2, b=3, stretch="Lin")
 
 # Exercise: put images one beside the other with par()
-par(mfrow=c(2,1))
+par(mfrow=c(1,2))
 plotRGB(defor1, r=1, g=2, b=3, stretch="Lin")
 plotRGB(defor2, r=1, g=2, b=3, stretch="Lin")
 
