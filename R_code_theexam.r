@@ -4,8 +4,10 @@
 #"..." (brackets) = importing data from an external source;
 library(ncdf4) 
 #raster package (already installed with the function install.packages("raster")) = reading, writing, manipulating, analyzing and modeling of spatial (Geographic Data Analysis and Modeling)
-library(raster)  #raster package (already installed with the function install.packages("raster")) = using spatial data; 
+library(raster)  #raster package (already installed with the function install.packages("raster")) = using spatial data;
 setwd("C:/lab/") #setwd function= setting a new working directory
+
+# Let's start the pathway of selection for the most suitable product to take as reference in the Albedo Data Collection
 
 #import to R list of Albedo files naming ""c_gls_ALDH_" all together (images since 25/09/19 until 25/06/20)
 rlist <- list.files(pattern="c_gls_ALDH_")
@@ -32,6 +34,7 @@ cl <- colorRampPalette (c('green','orange','yellow')) (100)
 #main = giving a title
 plot(ALBstack,col =cl, main=c ("ALBEDO 25-09-19/25-10-19", "ALBEDO 26-10-19/25-11-19", "ALBEDO 26-11-19/25-12-19", "ALBEDO 26-12-19/25-01-20", "ALBEDO 26-01-20/25-02-20", "ALBEDO 26-02-20/25-03-20", "ALBEDO 26-03-20/25-04-20","ALBEDO 26-04-20/25-05-20", "ALBEDO 26-05-20/25-06-20"))
 
+#Otherwise import to R one by one
 #par(mfrow=c(3,3))
 #cl <- colorRampPalette (c('green','orange','yellow')) (100)
 #plot(ALB01, col=cl, main ="ALBEDO 25-09-19/25-10-19")
@@ -46,24 +49,28 @@ plot(ALBstack,col =cl, main=c ("ALBEDO 25-09-19/25-10-19", "ALBEDO 26-10-19/25-1
 
 #The boxplot function shows how the distribution of a numerical variable y (in this case period-> different months) differs across the unique levels of a second variable, x (in this case Albedo)
 boxplot(ALBstack,horizontal=T,axes=T,outline=F, col="sienna1",xlab="Albedo", ylab="Period",names=c ("01", "02", "03", "04", "05", "06", "07", "08", "09"))
-# horizontal= true, logical indicating if the boxplots should be horizontal; default FALSE means vertical boxes.
-# axes = true, it means axes are graphically shown. 
+#horizontal= true, logical indicating if the boxplots should be horizontal; default FALSE means vertical boxes.
+#axes = true, it means axes are graphically shown. 
 #if outline is false, the outliers are not drawn
 #lab function labels x and y axis (x- and y-axis annotation)
 #names are group labels for each boxplot
 
-
+#Comments on the outcome boxplots: as we can notice, each boxplot diversifies more or less from each other (both regarding the media and the range of the min and max values) because it depends on the month they refer to. The data concerning Albedo cover a monthly timeframe, while those referring to FAPAR and LAI cover a wider timeframe (7 months), so the most suitable product in the Albedo Data Collection taken as sample might be that one referring to boxplot number 5° (26-01-20/25-02-20), because it is the median product (the central product among Albedo products). In addition, Albedo products of Boxplots 5 and 6 assume a wider range of values and therefore they allow for a more accurate comparaison;
+ 
+#Let's take as sample reference Albedo n°5 -> ALBEDO 26-01-20/25-02-20
 ALB05 <- raster("c_gls_ALDH_05.nc")
 cl <- colorRampPalette (c('green','chocolate3','darkblue')) (100)
 plot(ALB05, col=cl,main ="ALBEDO 26-01-20/25-02-20") 
+#Plotting ALB05 makes me realise its low quality resolution exactly in the specific area (my case study area comparable to the Eurorpean extent) where we are going to focus on; for this reason, let's switch ALB05 and ALB06 which are pretty equal concerning range of values that their boxplots assume.
 ALB06 <- raster("c_gls_ALDH_06.nc")
 cl <- colorRampPalette (c('green','chocolate3','darkblue')) (100)
 plot(ALB06, col=cl,main ="ALBEDO 26-01-20/25-02-20") 
 
-
+#let's check through dif function their equality in terms of values. 
 difALB <- ALB06 - ALB05
 cldif<- colorRampPalette(c('red','wheat','red'))(100)
-plot(difALB, col=cldif, main= "Difference Alb06 - Alb05")
+plot(difALB, col=cldif, main= "Difference Alb06 - Alb05") #exactly where the colour red is much more intense, Alb05 and Alb06 show different values for a specific area, but in this case no significant diversification occurs, especially in the case study area.
+
 
 #let's import image regarding Vegetation Properties - FAPAR 300m V1 during the period: 13/10/19-30/06/20
 fapar <- raster("c_gls_FAPAR300_202005100000_GLOBE_PROBAV_V1.0.1.nc")
