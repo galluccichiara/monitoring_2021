@@ -24,7 +24,8 @@ ALBstack<- stack(list_rast) #let's produce a stack (a list of data put all toget
 #ALB08 <- raster("c_gls_ALDH_08.nc")
 #ALB09 <- raster("c_gls_ALDH_09.nc")
 
-par(mfrow=c(3,3))
+#Using par function (), let's put images one beside the other in order to more easily compare and to understand their chronological sequence
+par(mfrow=c(3,3)) #the first number in () refers to row and the second one to colums
 #colorRampPalette = using and edit color schemes, yellow is used for maximum values because it is the colour that has the maximum impact to our eyes, 100 is the number of color in the used color scale; #c= setting things ("c" is for "characters") before the array
 cl <- colorRampPalette (c('green','orange','yellow')) (100)
 #plot = plotting/showing of R objects
