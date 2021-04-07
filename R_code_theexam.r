@@ -84,7 +84,7 @@ plot(lai, col=cl, main ="LAI 13/10/2019-30/06/2020")
 
 #focus on a specific area in order to analyse the correlation-> this area, whose extent may be overlapped to Europe extent, is representative in order to understand my case study
 ext <- c(0,50,40,60)  #ext = defining minimum and maximum of x, y variables
-EUALBEDO <- crop (albedo, ext) #crop= zooming in on a specific part of the map (the specific area analyzed), it's for geographic subset; #,ext = the extension previously declared
+EUALBEDO <- crop (ALB06, ext) #crop= zooming in on a specific part of the map (the specific area analyzed), it's for geographic subset; #,ext = the extension previously declared
 cl <- colorRampPalette (c('green','chocolate3','darkblue')) (100) 
 plot(EUALBEDO, col=cl, main ="EU.ALBEDO 26-01-20/25-02-20")
 
@@ -101,6 +101,7 @@ cl <- colorRampPalette (c("burlywood4","yellow","green4")) (100)
 plot(EULAI, col= cl, main="EU.LAI 13/10/2019-30/06/2020")
 
 #let's graphically compare the three plots and let's locate the plot regarding EU.ALBEDO in-between EU.FAPAR and EU.LAI respectively in order to have a clearer overall picture about albedo-fapar and albedo-lai correlationship
+
 par(mfrow=c(1,3)) #par = setting graphical parameters => par(mfrow = c (nrows,ncolumns) = creating a matrix of nrows, ncolumns to plot the two obtained maps together and compare them
 cl <- colorRampPalette (c("burlywood4","yellow","green4")) (100)
 plot(EUFAPAR, col=cl,main="EU.FAPAR 13/10/2019-30/06/2020") 
@@ -113,7 +114,7 @@ plot(EULAI,col=cl, main="EU.LAI 13/10/2019-30/06/2020")
 plotRGB(EN, red=EN13, green=EN07, blue=EN01, stretch="lin")
 plotRGB(ALB, blue=ALB01, red=ALB05, yellow=ALB09, stretch="lin")
 
-
+???pdf("EUcomparaison.pdf")
 
 
 
