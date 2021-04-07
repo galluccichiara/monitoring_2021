@@ -27,7 +27,7 @@ ALBstack<- stack(list_rast) #let's produce a stack (a list of data put all toget
 #ALB09 <- raster("c_gls_ALDH_09.nc")
 
 #Using par function (), let's put images one beside the other in order to more easily compare and to understand their chronological sequence
-par(mfrow=c(3,3)) #the first number in () refers to number of rows and the second one to number of columns
+par(mfrow=c(3,3)) #par = setting graphical parameters => par(mfrow = c (nrows,ncolumns) = creating a matrix of nrows, ncolumns to plot the obtained images together and compare them; the first number in () refers to number of rows and the second one to number of columns
 #colorRampPalette = using and edit color schemes, yellow is used for maximum values because it is the colour that has the maximum impact to our eyes, 100 is the number of color in the used color scale; #c= setting things ("c" is for "characters") before the array
 cl <- colorRampPalette (c('green','orange','yellow')) (100)
 #plot = plotting/showing of R objects
@@ -102,13 +102,16 @@ plot(EULAI, col= cl, main="EU.LAI 13/10/2019-30/06/2020")
 
 #let's graphically compare the three plots and let's locate the plot regarding EU.ALBEDO in-between EU.FAPAR and EU.LAI respectively in order to have a clearer overall picture about albedo-fapar and albedo-lai correlationship
 
-par(mfrow=c(1,3)) #par = setting graphical parameters => par(mfrow = c (nrows,ncolumns) = creating a matrix of nrows, ncolumns to plot the two obtained maps together and compare them
+par(mfrow=c(1,3))
 cl <- colorRampPalette (c("burlywood4","yellow","green4")) (100)
 plot(EUFAPAR, col=cl,main="EU.FAPAR 13/10/2019-30/06/2020") 
 cl <- colorRampPalette (c('green','chocolate3','darkblue')) (100) 
 plot(EUALBEDO, col=cl,main="EU.ALBEDO 15/04-15/05/20")
 cl <- colorRampPalette (c("burlywood4","yellow","green4")) (100)
 plot(EULAI,col=cl, main="EU.LAI 13/10/2019-30/06/2020")
+
+#This specific geographic area demonstrates that where Albedo maintains a low level, this is not necessarily due to high values of LAI, actually a high level of FAPAR compensate for this deficiency.As a result, despite the green and alive elements of the canopy doesn’t provide a high level of LAI due to their typology and quantity of canopy, the fraction of the solar radiation absorbed by live leaves for the photosynthesis activity is significantly intense anyway. 
+
 
 #???????????????????
 plotRGB(EN, red=EN13, green=EN07, blue=EN01, stretch="lin")
