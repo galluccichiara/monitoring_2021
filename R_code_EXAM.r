@@ -4,25 +4,56 @@
 #"..." (brackets) = importing data from an external source;
 library(ncdf4) 
 #raster package (already installed with the function install.packages("raster")) = reading, writing, manipulating, analyzing and modeling of spatial (Geographic Data Analysis and Modeling)
-library(raster) #raster package (already installed with the function install.packages("raster")) = using spatial data; 
+library(raster) #raster package (already installed with the function install.packages("raster")) = raster function used for importing,read and model spatial data analysis 
 setwd("C:/lab/") #setwd function= setting a new working directory
 
-#let's import image about Hemispherical Albedo 1km Global V1 during the period: 15/04/2020-15/05/2020 -> this specific timeframe as "reference mean period"
-#raster function = import and read data; #albedo <- = giving a name to this data
-albedo <- raster("albedo1.nc")
-cl <- colorRampPalette (c('green','orange','yellow')) (100) #colorRampPalette = using and edit color schemes, yellow is used for maximum values because it is the colour that has the maximum impact to our eyes, 100 is the number of color in the used color scale; #c= setting things ("c" is for "characters") before the array
-#plot = plotting/showing of R objects
-plot(albedo, col=cl, main ="ALBEDO 15/04-15/05/20") #main = giving a title
+#instead of importing all files referring Albedo one by one, let's import them all together
+rlist<-list.files(pattern="c_gls_ALDH_")
+rlist # to recall the list files
+list_rast <- lapply(rlist,raster) #lapply=apply the raster fuction to the list of file regarding Surface Albedo
+ALBstack<- stack(list_rast) #stack function is used to transform data available as separate columns in a data frame or list into a single column 
 
-#let's do the same regarding Vegetation Properties - FAPAR 300m V1 during the period: 13/12/2019-31/08/2020
-fapar <- raster("fapar.nc")
-cl <- colorRampPalette (c('black','yellow','green')) (100)
-plot(fapar, col=cl, main ="FAPAR 13/12/2019-31/08/2020")
+#let's plot in a single overview all plots referring Albedo and let's set up them in 3 rows and 3 columns 
+par(mfrow=c(3,3))
+cl <- colorRampPalette(c('green','orange','yellow')) (100) #colorRampPalette = using and edit color schemes, yellow is used for maximum values because it is the colour that has the maximum impact to our eyes, 100 is the number of color in the used color scale; #c= setting things ("c" is for "characters") before the array
+plot(ALBstack,col =cl, main=c ("ALBEDO 25-09-19/25-10-19", "ALBEDO 26-10-19/25-11-19", "ALBEDO 26-11-19/25-12-19", "ALBEDO 26-12-19/25-01-20", "ALBEDO 26-01-20/25-02-20", "ALBEDO 26-02-20/25-03-20", "ALBEDO 26-03-20/25-04-20 ","ALBEDO 26-04-20/25-05-20", "ALBEDO 26-05-20/25-06-20"))
+#plot = plotting/showing  R objects
+#main = giving a title
 
-#let's do the same regarding Vegetation Properties - LAI 300m V1 during the period: 13/12/2019-31/08/2020
-lai <- raster("lai.nc")
-cl <- colorRampPalette (c('black','yellow','green')) (100)
-plot(lai, col=cl, main ="LAI 13/12/2019-31/08/2020")
+#my analysis focuses on a specific timeframe (from 13/10/2019 to 30/06/2020, but there is a mismatch in timeframe btw Albedo Data and LAI/FAPAR Data
+#Let's perform a pathway of selection in order to choose the most suitable Albedo output taken as sample reference in the Albedo Data Collection
+boxplot(ALBstack,horizontal=T,axes=T,outline=F, col="sienna1",xlab="Albedo", ylab="Period",names=c ("01", "02", "03", "04", "05", "06", "07", "08", "09")) 
+#x- and y-lab means labelling axys -> x- and y-axys annotation
+#info about the comparaison among the 9 boxplots: the minimum, maximum and mean values of each ones diversifies because they change according to the related month we are dealing with.
+#x- and y-lab means labelling axys -> x- and y-axys annotation 
+#names=c function numbers the boxplots 
+
+#Let's take the boxplot 05 as sample reference because firstly, it is the median output and secondly, it assumes, including Albedo 06, a wider range of values which may result in a more accurate comparison. 
+ALB05 <- raster("c_gls_ALDH_05.nc")
+cl <- colorRampPalette (c('green','chocolate3','darkblue')) (100)
+plot(ALB05, col=cl,main ="ALBEDO 26-01-20/25-02-20") 
+
+#lackness: Albedo 05 plot has very low resolution quality exactly in the case study area, so let’s check through dif function the equality btw Albedo 05 and 06 in terms of values 
+#let’s graphically verify how much they diversify from one each other.
+difALB <- ALB06 - ALB05
+cldif<- colorRampPalette(c('red','wheat','red'))(100)
+plot(difALB, col=cldif, main= "Difference Alb06 - Alb05")
+#as we can observe exactly where the colour red is much more intense, Alb05 and Alb06 show different values for a specific area, but in this case no significant diversification occurs, especially in the case study area.
+
+#Let's plot Albedo 06
+ALB06 <- raster("c_gls_ALDH_06.nc")
+cl <- colorRampPalette (c('green','chocolate3','darkblue')) (100)
+plot(ALB06, col=cl,main ="ALBEDO 26-02-20/25-03-20") 
+
+#let's do the same regarding Vegetation Properties - FAPAR 300m V1 during the period: 13/10/2019-30/06/2020
+fapar <-raster("c_gls_FAPAR300_202005100000_GLOBE_PROBAV_V1.0.1.nc")
+cl <- colorRampPalette (c('burlywood4','yellow','green4')) (100)
+plot(fapar, col=cl, main ="FAPAR 13/10/2019-30/06/2020")
+
+#let's do the same regarding Vegetation Properties - LAI 300m V1 during the period: 13/10/2019-30/06/2020
+lai <- raster("c_gls_LAI300_202005100000_GLOBE_PROBAV_V1.0.1.nc")
+cl <- colorRampPalette (c('burlywood4','yellow','green4')) (100)
+plot(lai, col=cl, main ="LAI 13/10/2019-30/06/2020")
 
 #focus on a specific area in order to analyse the correlation-> this area, whose extent may be overlapped to Europe extent, is representative in order to understand my case study
 ext <- c(0,50,40,60) #ext = defining minimum and maximum of x, y variables
@@ -48,22 +79,12 @@ plot(EUFAPAR, col=cl,main="EU.FAPAR 13/12/2019-31/08/2020")
 plot(EUALBEDO, col=cl,main="EU.ALBEDO 15/04-15/05/20")
 plot(EULAI,col=cl, main="EU.LAI 13/12/2019-31/08/2020")
 
-# With regards to Albedo values, since I chose the products observed during the period bounded btw 15/04 and 15/05/20 as reference example, I would like to 
-
-# carica lista di Albedo da 13/12 a 31/08 
-# stack
-# dif tra primo e ultimo mese
-# multivariate analysis 
-dif <- EUFAPAR-EULAI
-plot(dif)
+#CONCLUSIONS:
+#This specific geographic area demonstrates that where Albedo maintains a low level, this is not necessarily due to high values of LAI
+#High level of FAPAR compensates for this deficiency
+#Despite the green and alive elements of the canopy doesn’t provide a high level of LAI due to their typology and quantity of canopy, the fraction of the solar radiation absorbed by live leaves for the photosynthesis activity is significantly intense anyway.
 
 
-#the outcomes show the huge amount of NO2 in January decreased during the following two months due to the main causes already described in the introduction: COVID-19, level of pollution, market crisis
-#how to compute the difference between these two maps
-difNO2 <- Taranto_jan_NO2 - Taranto_mar_NO2
-cldif <- colorRampPalette (c('blue','black','yellow')) (100) #where the new map is more yellow, it means there's a decrease of NO2 level 
-plot(difNO2, col=cldif)
 
 
-#cosa notiamo + aggiusta colori http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf
-#???? funzione salvataggio
+
